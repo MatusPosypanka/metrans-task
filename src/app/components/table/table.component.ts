@@ -9,9 +9,9 @@ import { Data } from '../../models/data.model';
   styleUrl: './table.component.scss',
 })
 export class TableComponent {
-  @Input() data?: Data[];
-  @Output() editItem = new EventEmitter<Data>();
-  @Output() createItem = new EventEmitter<void>();
+  @Input() data?: Data[]; // Input property to receive data from parent component
+  @Output() edit = new EventEmitter<Data>(); // Output event to emit when an item is clicked for editing
+  @Output() create = new EventEmitter<void>(); // Output event to emit when the add new item button is clicked
 
   // sorting order configuration - true for ascending, false for descending
   sortOrder: { lastSorted: keyof Data; order: boolean } = {

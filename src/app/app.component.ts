@@ -14,7 +14,7 @@ import { ItemFormComponent } from './components/item-form/item-form.component';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  data = this.dataService.dataList;
+  data = this.dataService.dataList; // Array to hold the data items
 
   constructor(
     private dataService: DataService,

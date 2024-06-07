@@ -15,11 +15,11 @@ import { Data } from '../../models/data.model';
   styleUrl: './item-form.component.scss',
 })
 export class ItemFormComponent implements OnInit {
-  @Input() data?: Data;
-  @Output() save = new EventEmitter<Data>();
-  @Output() delete = new EventEmitter<number>();
-  form: FormGroup;
-  deleteButton = false;
+  @Input() data?: Data; // Input property to receive data from parent component
+  @Output() save = new EventEmitter<Data>(); // Output event to emit when form is saved
+  @Output() delete = new EventEmitter<number>(); // Output event to emit when item is deleted
+  form: FormGroup; // Form group to manage the form controls and validation
+  deleteButton = false; // Flag to show/hide delete button
 
   constructor(private fb: FormBuilder) {
     // Initialize the form group with controls
