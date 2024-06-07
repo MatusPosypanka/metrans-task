@@ -13,13 +13,16 @@ export class TableComponent {
   @Output() editItem = new EventEmitter<Data>();
   @Output() createItem = new EventEmitter<void>();
 
-  // sorting order true for ascending, false for descending
+  // sorting order configuration - true for ascending, false for descending
   sortOrder: { lastSorted: keyof Data; order: boolean } = {
     lastSorted: 'id',
     order: true,
   };
 
-  // sort table
+  /**
+   * Sorts the table data by the specified column.
+   * @param column The column to sort by.
+   */
   sortTable(column: keyof Data): void {
     if (!this.data) return; // handle undefined case
 

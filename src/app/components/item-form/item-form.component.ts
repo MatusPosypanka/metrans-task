@@ -22,6 +22,7 @@ export class ItemFormComponent implements OnInit {
   deleteButton = false;
 
   constructor(private fb: FormBuilder) {
+    // Initialize the form group with controls
     this.form = this.fb.group({
       title: ['', Validators.required],
       userId: ['', Validators.required],
@@ -30,16 +31,16 @@ export class ItemFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // If data is provided, patch the form values and show the delete button
     if (this.data) {
       this.form.patchValue(this.data);
       this.deleteButton = true;
     }
   }
 
+  // Emit save event with form values when form is submitted
   onSubmit(): void {
-    console.log('save');
     if (this.form.valid) {
-      console.log('valid');
       this.save.emit({ ...this.data, ...this.form.value });
     }
   }

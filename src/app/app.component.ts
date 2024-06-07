@@ -20,10 +20,15 @@ export class AppComponent {
     private dataService: DataService,
     private modalService: ModalService,
   ) {
-    // Fetch data from backend
-    this.dataService.getData().pipe(takeUntilDestroyed()).subscribe();
+    // Subscribe to data service to get the data and update the local state
+    this.dataService.fetchData().pipe(takeUntilDestroyed()).subscribe();
   }
 
+  /**
+   * Handles the edit event from the TableComponent.
+   * Opens the modal with the selected item data.
+   * @param item The data item to edit.
+   */
   onEditTableItem(item: Data): void {
     const modalRef = this.modalService.openModal(ItemFormComponent, item);
     modalRef.componentInstance.save.subscribe((editedItem: Data) => {
@@ -37,6 +42,10 @@ export class AppComponent {
     });
   }
 
+  /**
+   * Handles the create event from the TableComponent.
+   * Opens the modal to create a new item.
+   */
   onCreateTableItem(): void {
     const modalRef = this.modalService.openModal(ItemFormComponent);
     modalRef.componentInstance.save.subscribe((newItem: Data) => {

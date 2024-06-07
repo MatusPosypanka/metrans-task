@@ -11,33 +11,38 @@ export class DataService {
 
   constructor(private http: HttpClient) {}
 
-  // State management
+  // WritableSignal to hold the state of the data list
   dataList: WritableSignal<Data[]> = signal<Data[]>([]);
 
-  // Fetch data from backend, transform userId property and save it to state
-  getData(): Observable<Data[]> {
-    return this.http.get<Data[]>(this.dataUrl).pipe(
-      tap((data) => {
-        // Map UserID property to strings
-        // 1 => admin
-        // 2 => tester
-        // everything else => neznámý uživatel
-        const transformedData = data
-          ? data.map((item) =>
-              item.userId === 1
-                ? { ...item, userId: 'admin' }
-                : item.userId === 2
-                  ? { ...item, userId: 'tester' }
-                  : { ...item, userId: 'neznámý uživatel' },
-            )
-          : [];
-        // Update state with transformed data
-        this.dataList.set(transformedData);
-      }),
-    );
+  /**
+   * Fetches data from the backend and calls transformData.
+   * @returns Observable of Data array
+   */
+  fetchData(): Observable<Data[]> {
+    return this.http
+      .get<Data[]>(this.dataUrl)
+      .pipe(tap((data) => this.transformData(data)));
   }
 
-  // Create new item from dataList
+  /**
+   * Transforms the userId property of the data items and updates the state.
+   * @param data - Data array to be transformed
+   */
+  transformData(data: Data[]): void {
+    const transformedData = data.map((item) =>
+      item.userId === 1
+        ? { ...item, userId: 'admin' }
+        : item.userId === 2
+          ? { ...item, userId: 'tester' }
+          : { ...item, userId: 'neznámý uživatel' },
+    );
+    this.dataList.set(transformedData);
+  }
+
+  /**
+   * Creates a new item and updates the state.
+   * @param item - New item to be added
+   */
   createItem(item: Omit<Data, 'id'>): void {
     console.log('dataservice: create');
     this.dataList.update((dataList) => [
@@ -46,7 +51,10 @@ export class DataService {
     ]);
   }
 
-  // Edit existing item from dataList
+  /**
+   * Edits an existing item in the state.
+   * @param editedItem - Item with updated data
+   */
   editItem(editedItem: Data): void {
     this.dataList.update((dataList) => {
       return dataList.map((item) =>
@@ -55,14 +63,21 @@ export class DataService {
     });
   }
 
-  // Delete existing item from dataList
+  /**
+   * Deletes an item from the state.
+   * @param itemId - ID of the item to be deleted
+   */
   deleteItem(itemId: number): void {
     this.dataList.update((dataList) =>
       dataList.filter((item) => item.id !== itemId),
     );
   }
 
-  // generate new unique id for item in the array
+  /**
+   * Generates a new unique ID for an item in the array.
+   * @param list - Current list of items
+   * @returns New unique ID
+   */
   private generateId(list: Data[]): number {
     return list.length > 0 ? Math.max(...list.map((item) => item.id)) + 1 : 1;
   }
