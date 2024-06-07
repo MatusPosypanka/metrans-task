@@ -41,7 +41,7 @@ export class ItemFormComponent implements OnInit {
 
   // Emit save event with form values when form is submitted
   onSubmit(): void {
-    this.formSubmitted = true; // Set form as submitted
+    this.formSubmitted = true;
     if (this.form.valid) {
       this.save.emit({ ...this.data, ...this.form.value });
     }
