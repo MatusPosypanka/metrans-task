@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Data } from '../../models/data.model';
 
 @Component({
@@ -10,16 +10,19 @@ import { Data } from '../../models/data.model';
 })
 export class TableComponent {
   @Input() data?: Data[];
+  @Output() editItem = new EventEmitter<Data>();
+  @Output() createItem = new EventEmitter<void>();
 
-  // Sorting order true for ascending, false for descending
+  // sorting order true for ascending, false for descending
   sortOrder: { lastSorted: keyof Data; order: boolean } = {
     lastSorted: 'id',
     order: true,
   };
 
-  // sort Table
+  // sort table
   sortTable(column: keyof Data): void {
-    if (!this.data) return;
+    if (!this.data) return; // handle undefined case
+
     // switch ascending and descending order
     // if sorting different columns always start with ascending order
     this.sortOrder.lastSorted === column
@@ -37,20 +40,5 @@ export class TableComponent {
         return 0;
       }
     });
-  }
-
-  // Edit existing table row
-  editRow(itemId: number): void {
-    console.log('edit row', itemId);
-  }
-
-  // Create new table row
-  createRow(itemId: number): void {
-    console.log('edit row', itemId);
-  }
-
-  // Delete existing table row
-  deleteRow(itemId: number): void {
-    console.log('edit row', itemId);
   }
 }

@@ -4,6 +4,10 @@
   </header>
 
   <section>
-    <app-table [data]="data()"></app-table>
+    <app-table
+      [data]="data()"
+      (editItem)="onEditTableItem($event)"
+      (createItem)="onCreateTableItem()"
+    ></app-table>
   </section>
 </main>
