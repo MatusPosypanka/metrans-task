@@ -16,8 +16,8 @@ import { Data } from '../../models/data.model';
 })
 export class ItemFormComponent implements OnInit {
   @Input() data?: Data; // Input property to receive data from parent component
-  @Output() editItem = new EventEmitter<Data>(); // Output event to emit when item is edited
-  @Output() deleteItem = new EventEmitter<number>(); // Output event to emit when item is deleted
+  @Output() save = new EventEmitter<Data>(); // Output event to emit when item is saved
+  @Output() delete = new EventEmitter<number>(); // Output event to emit when item is deleted
   form: FormGroup; // Form group to manage the form controls and validation
   deleteButton = false; // Flag to show/hide delete button
 
@@ -41,7 +41,7 @@ export class ItemFormComponent implements OnInit {
   // Emit save event with form values when form is submitted
   onSubmit(): void {
     if (this.form.valid) {
-      this.editItem.emit({ ...this.data, ...this.form.value });
+      this.save.emit({ ...this.data, ...this.form.value });
     }
   }
 }
