@@ -1,19 +1,55 @@
 <div class="form-wrapper">
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="form-group">
+      <!-- TITLE INPUT WITH VALIDATION -->
       <label for="title">Title</label>
-      <input id="title" formControlName="title" class="form-control" required />
+      <input
+        id="title"
+        formControlName="title"
+        class="form-control"
+        [class.is-invalid]="
+          form.controls['title'].invalid &&
+          (formSubmitted ||
+            form.controls['title'].dirty ||
+            form.controls['title'].touched)
+        "
+        required
+      />
+      @if (
+        form.controls["title"].invalid &&
+        (formSubmitted ||
+          form.controls["title"].dirty ||
+          form.controls["title"].touched)
+      ) {
+        <div class="invalid-feedback">Title is required.</div>
+      }
     </div>
     <div class="form-group">
+      <!-- USER ID INPUT WITH VALIDATION -->
       <label for="userId">User ID</label>
       <input
         id="userId"
         formControlName="userId"
         class="form-control"
+        [class.is-invalid]="
+          form.controls['userId'].invalid &&
+          (formSubmitted ||
+            form.controls['userId'].dirty ||
+            form.controls['userId'].touched)
+        "
         required
       />
+      @if (
+        form.controls["userId"].invalid &&
+        (formSubmitted ||
+          form.controls["userId"].dirty ||
+          form.controls["userId"].touched)
+      ) {
+        <div class="invalid-feedback">User ID is required.</div>
+      }
     </div>
     <div class="form-group">
+      <!-- COMPLETED INPUT -->
       <label for="completed">Completed</label>
       <input
         id="completed"
@@ -23,6 +59,7 @@
       />
     </div>
     <div class="btn-wrapper">
+      <!-- SUBMITE AND DELETE BUTTONS -->
       <button type="submit" class="btn btn-primary">Save</button>
       @if (deleteButton && data && data.id) {
         <button

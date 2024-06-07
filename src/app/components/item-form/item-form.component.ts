@@ -20,6 +20,7 @@ export class ItemFormComponent implements OnInit {
   @Output() delete = new EventEmitter<number>(); // Output event to emit when item is deleted
   form: FormGroup; // Form group to manage the form controls and validation
   deleteButton = false; // Flag to show/hide delete button
+  formSubmitted = false; // Track form submission for validation
 
   constructor(private fb: FormBuilder) {
     // Initialize the form group with controls
@@ -40,6 +41,7 @@ export class ItemFormComponent implements OnInit {
 
   // Emit save event with form values when form is submitted
   onSubmit(): void {
+    this.formSubmitted = true; // Set form as submitted
     if (this.form.valid) {
       this.save.emit({ ...this.data, ...this.form.value });
     }
