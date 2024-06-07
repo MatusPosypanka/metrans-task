@@ -31,12 +31,12 @@ export class AppComponent {
    */
   onEditTableItem(item: Data): void {
     const modalRef = this.modalService.openModal(ItemFormComponent, item);
-    modalRef.componentInstance.save.subscribe((editedItem: Data) => {
+    modalRef.componentInstance.editItem.subscribe((editedItem: Data) => {
       this.dataService.editItem(editedItem);
       modalRef.close();
     });
 
-    modalRef.componentInstance.delete.subscribe((itemId: number) => {
+    modalRef.componentInstance.deleteItem.subscribe((itemId: number) => {
       this.dataService.deleteItem(itemId);
       modalRef.close();
     });
