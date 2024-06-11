@@ -29,7 +29,7 @@ export class DataService {
    * @param item - New item to be added
    */
   createItem(item: Omit<Data, 'id'>): void {
-    console.log('dataservice: create');
+    // With BE: this.http.post<Data>(this.dataUrl, item).subscribe(() => { ...
     this.dataList.update((dataList) => [
       ...dataList,
       { ...item, id: this.generateId(dataList) },
@@ -41,6 +41,7 @@ export class DataService {
    * @param editedItem - Item with updated data
    */
   editItem(editedItem: Data): void {
+    // With BE: this.http.put<Data>(`${this.dataUrl}/${id}`,item).subscribe(() => { ...
     this.dataList.update((dataList) => {
       return dataList.map((item) =>
         item.id === editedItem.id ? editedItem : item,
@@ -53,6 +54,7 @@ export class DataService {
    * @param itemId - ID of the item to be deleted
    */
   deleteItem(itemId: number): void {
+    // With BE: this.http.delete(`${this.dataUrl}/${id}`).subscribe(() => { ...
     this.dataList.update((dataList) =>
       dataList.filter((item) => item.id !== itemId),
     );
