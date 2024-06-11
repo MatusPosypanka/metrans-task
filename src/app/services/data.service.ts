@@ -30,7 +30,6 @@ export class DataService {
    */
   createItem(item: Omit<Data, 'id'>): void {
     // With BE: this.http.post<Data>(this.dataUrl, item).pipe(tap( item => ... )).subscribe()
-
     this.dataList.update((dataList) => [
       ...dataList,
       { ...item, id: this.generateId(dataList) },
