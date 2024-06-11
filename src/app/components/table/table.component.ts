@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Data } from '../../models/data.model';
+import { UserIdPipe } from '../../pipes/user-id.pipe';
 
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [],
+  imports: [UserIdPipe],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
 })

@@ -21,22 +21,7 @@ export class DataService {
   fetchData(): Observable<Data[]> {
     return this.http
       .get<Data[]>(this.dataUrl)
-      .pipe(tap((data) => this.transformData(data)));
-  }
-
-  /**
-   * Transforms the userId property of the data items and updates the state.
-   * @param data - Data array to be transformed
-   */
-  transformData(data: Data[]): void {
-    const transformedData = data.map((item) =>
-      item.userId === 1
-        ? { ...item, userId: 'admin' }
-        : item.userId === 2
-          ? { ...item, userId: 'tester' }
-          : { ...item, userId: 'neznámý uživatel' },
-    );
-    this.dataList.set(transformedData);
+      .pipe(tap((data) => this.dataList.set(data)));
   }
 
   /**

@@ -26,7 +26,7 @@ export class ItemFormComponent implements OnInit {
     // Initialize the form group with controls
     this.form = this.fb.group({
       title: ['', Validators.required],
-      userId: ['', Validators.required],
+      userId: [null, [Validators.required, Validators.pattern(/^\d+$/)]], // number regex
       completed: [false],
     });
   }
@@ -43,7 +43,11 @@ export class ItemFormComponent implements OnInit {
   onSubmit(): void {
     this.formSubmitted = true;
     if (this.form.valid) {
-      this.save.emit({ ...this.data, ...this.form.value });
+      this.save.emit({
+        ...this.data,
+        ...this.form.value,
+        userId: parseInt(this.form.value.userId),
+      });
     }
   }
 }

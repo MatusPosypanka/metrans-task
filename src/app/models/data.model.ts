@@ -1,5 +1,5 @@
 export interface Data {
-  userId: number | string;
+  userId: number;
   id: number;
   title: string;
   completed: boolean;
